@@ -6,3 +6,43 @@
 }
 /*font-family : "Poppins", sans-serif;\
  font-family: "Playfair Display", serif;*/
+
+
+ /* Navbar CSS */
+ .navbar{
+  font-family:"Poppins", sans-serif;
+  font-size: 17px;
+  line-height: 26px;
+  text-transform: uppercase;
+  box-shadow: 0 8px 6px -6px gray;
+  --webkit-box-shadow : 0 8px 6px -6px gray;
+  border-bottom: solid gray !important;
+}
+
+.nav-link{
+  font-weight: 300 !important;
+}
+.nav-link.active{
+  border-bottom: 2px solid blue;
+}
+.navbar-brand{
+  font-weight: 700;
+  font-family: "roboto", sans-serif;
+  letter-spacing: 3px;
+}
+
+/*Footer*/
+.footer{
+  color: white;
+  padding : 25px;
+  background:black;
+}
+.footer a{
+  text-decoration: none;
+  color : white;
+  padding: 10px;
+}
+.footer a:hover{
+    color : goldenrod;
+    border-bottom: 1px solid goldenrod;
+}
