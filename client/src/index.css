@@ -46,3 +46,36 @@
     color : goldenrod;
     border-bottom: 1px solid goldenrod;
 }
+
+/*Page Not Found*/
+
+.pnf{
+  display: flex;
+  min-height: 67.3vh;
+  flex-direction:column;
+  align-items: center;
+  justify-content: center;
+  background: rgb(245, 86, 7);
+  color: white;
+}
+
+.pnf-title{
+  font-size: 100px;
+  font-weight: 700;
+}
+.pnf-heading{
+  font-weight: normal;
+}
+.pnf-btn{
+  color: white;
+  border : 1px solid white;
+  text-decoration: none;
+  padding: 10px;
+  margin-top: 10px;
+}
+.pnf-btn:hover{
+  color: black;
+  font-weight:400;
+  background: white;
+  border: 1px solid goldenrod;
+}
