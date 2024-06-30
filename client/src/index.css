@@ -30,6 +30,7 @@
   font-family: "roboto", sans-serif;
   letter-spacing: 3px;
 }
+/* ========================================= */
 
 /*Footer*/
 .footer{
@@ -46,6 +47,7 @@
     color : goldenrod;
     border-bottom: 1px solid goldenrod;
 }
+/* ========================================= */
 
 /*Page Not Found*/
 
@@ -79,3 +81,15 @@
   background: white;
   border: 1px solid goldenrod;
 }
+/* ========================================= */
+
+/*Conatct Us*/
+.contactus{
+  margin: 0;
+  padding: 0;
+  height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* ========================================= */
