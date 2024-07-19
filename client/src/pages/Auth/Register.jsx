@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Layout from "../../components/Layout/Layout";
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "../../styles/AuthStyles.css"
+import "../../styles/AuthStyles.css";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -11,19 +11,25 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+  const [answer, setAnswer] = useState("");
   const navigate = useNavigate();
 
   // Form Function
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/v1/auth/register",
-        { name, email, password, phone, address }
-      );
-      if(res && res.data.success){
-        toast.success(res.data && res.data.message)
-        navigate("/login")
-      }else{
+      const res = await axios.post("/api/v1/auth/register", {
+        name,
+        email,
+        password,
+        phone,
+        address,
+        answer
+      });
+      if (res && res.data.success) {
+        toast.success(res.data && res.data.message);
+        navigate("/login");
+      } else {
         toast.error(res.data.message);
       }
     } catch (error) {
@@ -37,7 +43,7 @@ const Register = () => {
       <div className="form-container">
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
-          <h1>REGISTER</h1> 
+            <h1>REGISTER</h1>
             <input
               type="text"
               className="form-control"
@@ -89,6 +95,17 @@ const Register = () => {
               placeholder="Address"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <input
+              type="text"
+              className="form-control"
+              id="exampleInputAddress"
+              placeholder="What Is Your Best Sport's Game?"
+              value={answer}
+              onChange={(e) => setAnswer(e.target.value)}
               required
             />
           </div>

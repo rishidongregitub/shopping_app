@@ -22,6 +22,9 @@ export const registerController = async (req, res) => {
     if (!phone) {
       return res.status(400).send({ message: "Phone is Required" });
     }
+    if (!answer) {
+      return res.status(400).send({ message: "Answer is Required" });
+    }
 
     // Check User
     const existingUser = await userModel.findOne({ email });
@@ -44,6 +47,7 @@ export const registerController = async (req, res) => {
       phone,
       address,
       password: hashedPassword,
+      answer
     }).save();
 
     return res.status(201).send({
@@ -117,7 +121,47 @@ export const loginController = async (req, res) => {
   }
 };
 
-//test controller 
-export const testController = (req,res)=>{
-  res.send(`Protected Route`)
-}
+//forgotPasswordController
+export const forgotPasswordController = async (req, res) => {
+  try {
+    const {email,question,newPassword} = req.body
+    if(!email){
+      res.status(400).send({ message:"Email is required"})
+    }
+    if(!answer){
+      res.status(400).send({ message:"Answer is required"})
+    }
+    if(!newPassword){
+      res.status(400).send({ message:"New Password is required"})
+    }
+
+    //Check 
+
+    const user = await userModel.findOne({email,answer})
+    //validation
+    if(!user){
+      return res.status(404).send({
+        success : false,
+        message : "Wrong Email Or Answer"
+      })
+    }
+  const hashed = await hashPassword(newPassword)
+  await userModel.findByIdAndUpdate(user._id,{password:hashed})
+  res.status(200).send({
+    success: true,
+    message : "Password Reset Successfully",
+  })
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Something went Wrong",
+      error,
+    });
+  }
+};
+
+//test controller
+export const testController = (req, res) => {
+  res.send(`Protected Route`);
+};
