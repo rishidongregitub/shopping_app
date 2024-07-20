@@ -24,13 +24,13 @@ const Register = () => {
         password,
         phone,
         address,
-        answer
+        answer,
       });
       if (res && res.data.success) {
-        toast.success(res.data && res.data.message);
+        toast.success(res.data.message);
         navigate("/login");
       } else {
-        toast.error(res.data.message);
+        toast.error(res.data.message || "Registration failed");
       }
     } catch (error) {
       console.log(error);
@@ -102,7 +102,7 @@ const Register = () => {
             <input
               type="text"
               className="form-control"
-              id="exampleInputAddress"
+              id="exampleInputAnswer"
               placeholder="What Is Your Best Sport's Game?"
               value={answer}
               onChange={(e) => setAnswer(e.target.value)}
