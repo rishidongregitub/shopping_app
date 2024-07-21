@@ -34,12 +34,12 @@ const ForgotPassword = () => {
       <div className="form-container">
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
-          <h1>Reset Password</h1>
+          <h1>Reset <br/> Password</h1>
             <input
               type="text"
               className="form-control"
               id="exampleInputEmail1"
-              placeholder="Email"
+              placeholder="Registered Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -61,7 +61,7 @@ const ForgotPassword = () => {
               type="password"
               className="form-control"
               id="exampleInputPassword1"
-              placeholder="Password"
+              placeholder="Enter Your New Password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               required
