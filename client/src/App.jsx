@@ -10,12 +10,12 @@ import Dashboard from "./pages/user/Dashboard";
 import PrivateRoute from "./components/Routes/Private";
 import ForgotPassword from "./pages/Auth/ForgotPassword";
 import AdminRoute from "./components/Routes/AdminRoute";
-import AdnimDashbard from "./pages/Admin/AdnimDashbard";
 import CreateCategory from "./pages/Admin/CreateCategory";
 import CreateProduct from "./pages/Admin/CreateProduct";
 import Users from "./pages/Admin/Users";
 import Orders from "./pages/user/Orders";
 import Profile from "./pages/user/Profile";
+import AdminDashbard from "./pages/Admin/AdminDashbard";
 
 const App = () => {
   return (
@@ -28,7 +28,7 @@ const App = () => {
           <Route path="user/profile" element={<Profile />} />
         </Route>
         <Route path="/dashboard" element={<AdminRoute/>}>
-          <Route path="admin" element={<AdnimDashbard />} />
+          <Route path="admin" element={<AdminDashbard />} />
           <Route path="admin/create-category" element={<CreateCategory />} />
           <Route path="admin/create-product" element={<CreateProduct />} />
           <Route path="admin/users" element={<Users />} />

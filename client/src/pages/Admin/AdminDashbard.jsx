@@ -2,7 +2,7 @@ import React from "react";
 import Layout from "../../components/Layout/Layout";
 import AdminMenu from "../../components/Layout/AdminMenu";
 import { useAuth } from "../../context/auth";
-const AdnimDashbard = () => {
+const AdminDashbard = () => {
   const [auth] = useAuth();
   return (
     <Layout>
@@ -24,4 +24,4 @@ const AdnimDashbard = () => {
   );
 };
 
-export default AdnimDashbard;
+export default AdminDashbard;
