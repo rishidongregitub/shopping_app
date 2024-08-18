@@ -49,7 +49,7 @@ const CreateProduct = () => {
       if(data?.success){
         toast.error(data?.message);
       }else{
-        toast.success("Product created successfully");
+        toast.success("Product created");
         navigate('/dashboard/admin/products')
       }
     } catch (error) {
