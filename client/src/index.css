@@ -93,3 +93,10 @@
   justify-content: center;
 }
 /* ========================================= */
+
+
+/*Product card styling*/
+.product-link{
+  text-decoration: none !important;
+  color: black !important;
+}
