@@ -30,13 +30,15 @@ const UpdateProducts = () => {
       setPrice(data.products.price)
       setQuantity(data.products.quantity)
       setShipping(data.products.shipping)
-      setCategory(data.products.category)
+      setCategory(data.products.category._id)
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(()=>{
     getSingleProduct();
+    getAllCategories();
+    //eslint-disable-next-line
   },[])
 
   //get all Categories
@@ -51,9 +53,6 @@ const UpdateProducts = () => {
       toast.error("Something Went Wrong In Getting Categories");
     }
   };
-  useEffect(() => {
-    getAllCategories();
-  }, []);
 
   //Create Product function
   const handleUpdateProduct = async (e) => {
@@ -66,11 +65,12 @@ const UpdateProducts = () => {
       productData.append("quantity", quantity);
       photo && productData.append("photo", photo);
       productData.append("category", category);
-      const { data } = axios.post(`/api/v1/update-product/:pid/${id}`, productData);
+      const { data } = axios.put(`/api/v1/product/update-product/${id}`, productData);
       if (data?.success) {
         toast.error(data?.message);
       } else {
         toast.success("Product Updated");
+        navigate("/dashboard/admin/products")
       }
     } catch (error) {
       console.log(error);
@@ -97,7 +97,7 @@ const UpdateProducts = () => {
                 onChange={(value) => {
                   setCategory(value);
                 }}
-                value={category.name}
+                value={category}
               >
                 {categories?.map((c) => (
                   <Option key={c._id} value={c._id}>
