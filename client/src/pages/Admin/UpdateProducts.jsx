@@ -4,7 +4,7 @@ import Layout from "../../components/Layout/Layout";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { Select } from "antd";
+import { Modal, Select } from "antd";
 const { Option } = Select;
 
 const UpdateProducts = () => {
@@ -18,28 +18,30 @@ const UpdateProducts = () => {
   const [quantity, setQuantity] = useState("");
   const [shipping, setShipping] = useState("");
   const [photo, setPhoto] = useState("");
-  const [id,setId] =useState("")
+  const [id, setId] = useState("");
 
   //Get Single Product
   const getSingleProduct = async () => {
     try {
-      const { data } = await axios.get(`/api/v1/product/get-products/${params.slug}`);
-      setName(data.products.name)
-      setId(data.products._id)
-      setDescription(data.products.description)
-      setPrice(data.products.price)
-      setQuantity(data.products.quantity)
-      setShipping(data.products.shipping)
-      setCategory(data.products.category._id)
+      const { data } = await axios.get(
+        `/api/v1/product/get-products/${params.slug}`
+      );
+      setName(data.products.name);
+      setId(data.products._id);
+      setDescription(data.products.description);
+      setPrice(data.products.price);
+      setQuantity(data.products.quantity);
+      setShipping(data.products.shipping);
+      setCategory(data.products.category._id);
     } catch (error) {
       console.log(error);
     }
   };
-  useEffect(()=>{
+  useEffect(() => {
     getSingleProduct();
     getAllCategories();
     //eslint-disable-next-line
-  },[])
+  }, []);
 
   //get all Categories
   const getAllCategories = async (req, res) => {
@@ -54,7 +56,7 @@ const UpdateProducts = () => {
     }
   };
 
-  //Create Product function
+  //Update Product function
   const handleUpdateProduct = async (e) => {
     e.preventDefault();
     try {
@@ -65,12 +67,15 @@ const UpdateProducts = () => {
       productData.append("quantity", quantity);
       photo && productData.append("photo", photo);
       productData.append("category", category);
-      const { data } = axios.put(`/api/v1/product/update-product/${id}`, productData);
+      const { data } = axios.put(
+        `/api/v1/product/update-product/${id}`,
+        productData
+      );
       if (data?.success) {
         toast.error(data?.message);
       } else {
         toast.success("Product Updated");
-        navigate("/dashboard/admin/products")
+        navigate("/dashboard/admin/products");
       }
     } catch (error) {
       console.log(error);
@@ -78,6 +83,33 @@ const UpdateProducts = () => {
     }
   };
 
+  //Delete Product
+
+  const handleDeleteProduct = async () => {
+    Modal.confirm({
+      title: "Confirm Deletion",
+      content: "Are you sure you want to delete this product?",
+      okText: "Yes",
+      okType: "danger",
+      cancelText: "No",
+      onOk: async () => {
+        try {
+          const { data } = await axios.delete(`/api/v1/product/delete-product/${id}`);
+  
+          if (data?.success) {
+            toast.success("Product deleted successfully");
+            navigate("/dashboard/admin/products");
+          } else {
+            toast.error("Failed to delete product");
+          }
+        } catch (error) {
+          console.error(error);
+          toast.error("Something went wrong while deleting the product");
+        }
+      },
+    });
+  };
+  
   return (
     <Layout title={"Dashboard - Update Product"}>
       <div className="container-fluid m-3 p-3">
@@ -127,8 +159,8 @@ const UpdateProducts = () => {
                       className="img img-responsive"
                     />
                   </div>
-                ) :(
-                    <div className="text-center">
+                ) : (
+                  <div className="text-center">
                     <img
                       src={`/api/v1/product/product-photo/${id}`}
                       alt="Product"
@@ -182,7 +214,7 @@ const UpdateProducts = () => {
                   showSearch
                   className="form-select mb-3"
                   onChange={(value) => setShipping(value)}
-                  value={shipping ? "Yes" : "No" }
+                  value={shipping ? "Yes" : "No"}
                 >
                   <Option value="0">No</Option>
                   <Option value="1">Yes</Option>
@@ -194,6 +226,14 @@ const UpdateProducts = () => {
                   onClick={handleUpdateProduct}
                 >
                   Update Product
+                </button>
+              </div>
+              <div className="mb-3">
+                <button
+                  className="btn btn-danger"
+                  onClick={handleDeleteProduct}
+                >
+                  Delete Product
                 </button>
               </div>
             </div>
