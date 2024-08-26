@@ -107,6 +107,7 @@ const CreateCategory = () => {
               />
             </div>
             <div className="w-75">
+              {categories.length > 0 ? (
               <table className="table">
                 <thead>
                   <tr>
@@ -144,6 +145,10 @@ const CreateCategory = () => {
                   ))}
                 </tbody>
               </table>
+
+              ): 
+              <p className="text-center">No Category available</p>
+              }
             </div>
             <Modal
               onCancel={() => setVisible(false)}
