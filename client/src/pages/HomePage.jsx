@@ -9,6 +9,24 @@ const HomePage = () => {
   const [categories, setCategories] = useState([]);
   const [checked, setChecked] = useState([]);
   const [radio, setRadio] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+
+
+  //getTotal Count 
+  const getTotal= async()=>{
+    try {
+      const {data} = await axios.get('/api/v1/products/product-count')
+      console.log(data)
+      setTotal(data?.total)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  useEffect(()=>{
+    getTotal();
+  },[])
+
 
   //Get All Categories
   const getAllCategories = async () => {
@@ -26,7 +44,6 @@ const HomePage = () => {
   const getAllProducts = async () => {
     try {
       const { data } = await axios.get("/api/v1/product/get-products");
-      console.log(data.products);
       setProducts(data.products);
     } catch (error) {
       console.log(error);
@@ -105,6 +122,7 @@ const HomePage = () => {
         </div>
         <div className="col-md-9">
           <h1 className="text-center">All Products</h1>
+          {total}
           <div className="d-flex flex-wrap">
             {products?.map((product) => (
               <div className="card  m-2" style={{ width: "18rem" }}>
@@ -126,6 +144,9 @@ const HomePage = () => {
                 </div>
               </div>
             ))}
+          </div>
+          <div className="">
+            {total}
           </div>
         </div>
       </div>
