@@ -207,7 +207,7 @@ export const productFiltersController = async (req, res) => {
 export const productCountController = async (req, res) => {
   try {
     const total = await ProductModel.find({}).estimatedDocumentCount();
-    res.send(200).send({
+    res.status(200).send({
       success: true,
       total,
     });
