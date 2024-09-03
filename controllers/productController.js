@@ -231,8 +231,7 @@ export const productListController = async (req, res) => {
       .skip((page - 1) * perPage)
       .limit(perPage)
       .sort({ createdAt: - 1 });
-      console.log(products)
-      req.status(200).send({
+      res.status(200).send({
         success : true,
         products
       })

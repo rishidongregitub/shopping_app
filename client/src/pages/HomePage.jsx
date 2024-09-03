@@ -11,22 +11,7 @@ const HomePage = () => {
   const [radio, setRadio] = useState([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
-
-
-  //getTotal Count 
-  const getTotal= async()=>{
-    try {
-      const {data} = await axios.get('/api/v1/product/product-count')
-      console.log(data)
-      setTotal(data?.total)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  useEffect(()=>{
-    getTotal();
-  },[])
-
+  const [loading, setLoading] = useState(false);
 
   //Get All Categories
   const getAllCategories = async () => {
@@ -43,12 +28,45 @@ const HomePage = () => {
   //Get All Products
   const getAllProducts = async () => {
     try {
-      const { data } = await axios.get("/api/v1/product/get-products");
+      setLoading(true)
+      const { data } = await axios.get(`/api/v1/product/product-list/${page}`);
+      setLoading(false)
       setProducts(data.products);
     } catch (error) {
+      setLoading(false)
       console.log(error);
     }
   };
+
+    //getTotal Count 
+    const getTotal= async()=>{
+      try {
+        const {data} = await axios.get('/api/v1/product/product-count')
+        setTotal(data?.total)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+
+    useEffect(()=>{
+      if(page === 1) return;
+      loadMore();
+    },[page])
+    
+    //loadmore products
+    const loadMore =async()=>{
+      try {
+        setLoading(true)
+        const {data} = await axios.get(`/api/v1/product/product-list/${page}`)
+        setProducts([...products,...data?.products])
+        setLoading(false)
+      } catch (error) {
+        console.log(error)
+        setLoading(false)
+      }
+    }
+
   //Filter by Category
   const handleFilter = (value, id) => {
     let all = [...checked];
@@ -66,6 +84,7 @@ const HomePage = () => {
 
   useEffect(() => {
     getAllCategories();
+    getTotal();
   }, []);
 
   useEffect(() => {
@@ -122,7 +141,6 @@ const HomePage = () => {
         </div>
         <div className="col-md-9">
           <h1 className="text-center">All Products</h1>
-          {total}
           <div className="d-flex flex-wrap">
             {products?.map((product) => (
               <div className="card  m-2" style={{ width: "18rem" }}>
@@ -145,8 +163,15 @@ const HomePage = () => {
               </div>
             ))}
           </div>
-          <div className="">
-            {total}
+          <div className="m-2 p-2">
+              {products && products.length < total && (
+                <button className="btn btn-warning" onClick={(e)=>{
+                  e.preventDefault();
+                  setPage(page+1);
+                }}>
+                  {loading ? "Loading..." : "Load More"}
+                </button>
+              )}
           </div>
         </div>
       </div>
